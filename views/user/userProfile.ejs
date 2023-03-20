@@ -1,0 +1,219 @@
+<%- include("../layouts/userLayouts/header.ejs") -%>
+
+<style>
+.address-container {
+
+  margin: 20px;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-address-btn {
+  /* background-color: #D19C97; */
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.add-address-form {
+    background-color: #f0eceb;
+    border: 1px solid;
+    margin-top: 20px;
+}
+
+.cancel-btn {
+  background-color: transparent;
+  color: #0e0e0e;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.save-btn{
+  background-color: #D19C97;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  color: white;
+  padding: 3px;
+}
+.address-list {
+  margin-top: 20px;
+}
+.input-field{
+    width: 50%;
+    border: 1px solid rgb(155, 154, 156);
+    margin-left: 10px;
+}
+</style>
+
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <div class="address-container">
+                <div class="address-header">
+                  <!-- <button class="add-address-btn">Add new address</button> -->
+                </div>
+                <form action="/add-address" method="post" class="add-address-form p-3"  style="display:none">
+                 <label for="address"  class="form-label">Name:</label>
+                 <input type="text" class="form-control input-field" name="name">
+                 <br>
+                 <label for="phoneNumber" class="form-label">Phone Number :</label>
+                 <input type="text" class="form-control input-field" name="phoneNumber">
+                 <br>
+                 <label for="" class="form-label">pincode</label>
+                 <input type="number" class="form-control input-field" name="pinCode">
+                 <br>
+                 <label for="" class="form-label">Locality : </label>
+                 <input type="text" class="form-control input-field" name="locality">
+                 <br>
+                 <label for="" class="form-label">address: </label>
+                  <input type="text" class="form-control input-field" name="address">
+                  <br>
+                  <label for="district" class="form-label">District : </label>
+                  <input type="text" class="form-control input-field" name="district">
+                  <br>
+                  <label for="state" class="form-label">State :</label>
+                  <input type="text" class="form-control input-field" name="state">
+                  <br>
+                  <button type="submit" class="save-btn">Save</button>
+                  <button class="cancel-btn" type="button">Cancel</button>
+                </form>
+                <div class="address-list">
+                  <!-- existing addresses will be displayed here -->
+                </div>
+              </div>
+                <form action="/edit-profile" method="post">
+                <div class="form-input"> 
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">First Name : </label>
+                            <input type="text" name="firstName" value="<%= userData[0].firstName %>" class="form-control user-data-input"  disabled />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Last Name : </label>
+                            <input type="text"   name="lastName" value="<%= userData[0].lastName %>" class="form-control user-data-input" disabled />
+                        </div>
+                    </div>
+                  <br>
+                  <label for="price" class="form-label">Email :</label>
+                  <input type="text" name="email" value="<%= userData[0].email %>" class="form-control user-data-input" disabled >
+                  <br>
+                  <label for="price" class="form-label">Phone Number :</label>
+                  <input type="text" name="phoneNumber" value="<%= userData[0].phoneNumber %>" class="form-control user-data-input" disabled >
+                  <br>
+                  <input type="hidden" name="id" value="<%= %>" >
+                  <br>
+                  <input type="hidden" value="Save" class="form-control btn btn-dark" id="submit-form">
+                  
+                </div> 
+              </form>
+               <button id="edit-button" class="btn btn-dark">Edit</button>
+        </div>
+        <div class="col-lg-4 border-0">
+            <div class="card border-secondary  ">
+              <div class="card-header bg-light mx-auto border-0">
+                <img src="/images/adminImages/1676485004533-1e4ffa00-ad76-4d6f-9ada-c4d73234dd26.webp" style="width: 200px;height: auto;" alt="">
+              </div>  
+              <!-- <div class="card-header bg-light border-0 mx-auto">
+                <button class="btn btn-primary">
+                  Orders
+                </button>
+              </div> -->
+                    
+              <div class="d-flex justify-content-around align-items-evenly mt-2">
+                <a href="/order-history"><button class="btn btn-dark text-light">
+                  Orders
+                </button></a>
+                <button class="add-address-btn btn btn-dark">Add new address</button>
+              </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% if(userData[0].shippingAddress.length > 0){ 
+  for(let index in userData[0].shippingAddress){  %>
+    <div class="card ml-3"  style="width: 18rem;" >
+      <div class="card-body">
+        <h5 class="card-title">Name: <%= userData[0].shippingAddress[index].name %></h5>
+        <h6 class="card-subtitle mb-2 text-muted">Phone Number : <%= userData[0].shippingAddress[index].phoneNumber %></h6>
+        <p class="card-text" ><%= userData[0].shippingAddress[index].address %>, <%= userData[0].shippingAddress[index].locality %></p>
+        <p class="card-text">Pin Code:<%= userData[0].shippingAddress[index].pinCode %></p>
+        <p class="card-text"> <%= userData[0].shippingAddress[index].district %>,<%= userData[0].shippingAddress[index].state %></p>  
+        <a href="/update-address?address=<%=userData[0].shippingAddress[index]._id %>" class="card-link">Edit</button></a>
+        <a href="#" class="card-link">Remove</a>
+      </div>
+    </div>
+    <%
+  }
+ 
+} %>
+
+
+<script>
+// -----address------------
+const addAddressBtn = document.querySelector('.add-address-btn');
+const addAddressForm = document.querySelector('.add-address-form');
+const AddresscancelBtn = document.querySelector('.cancel-btn');
+const save = document.querySelector('#submit-form')
+addAddressBtn.addEventListener('click', () => {
+  addAddressForm.style.display = 'block';
+});
+
+AddresscancelBtn.addEventListener('click', () => {
+  addAddressForm.style.display = 'none';
+})
+
+//-------form Edit----------
+const edit_button= document.getElementById('edit-button')
+const submit_field = document.getElementById('submit-form')
+const profileform = document.querySelector('#profile-form')
+edit_button.addEventListener('click', function(){
+    if(save.type === 'hidden'){
+      save.type = 'submit'
+      document.querySelectorAll('.user-data-input').forEach((input)=>{
+        input.disabled = false;
+      })
+      edit_button.style.display = 'none'
+    }else{
+
+    }
+})
+// const user_data = document.getElementById('user-data')
+// user_data.addEventListener('submit',(event)=>{
+//     event.preventDefault()
+// })
+
+// profileform.addEventListener('submit',(event)=>{
+//     event.preventDefault()
+//     alert(profileform)
+//     const formData = new FormData(profileform)
+//     alert(formData)
+//     $.ajax({
+//         url: '/edit-profile',
+//         data:formData, 
+//         method:'post',
+//         processData:false,
+//         contentType:false,
+//         success:(Response)=>{
+
+//         }
+//     })
+// })
+// -------form submit
+
+
+</script>
+
+<%- include("../layouts/userLayouts/footer.ejs") -%>
+
+

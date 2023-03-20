@@ -1,0 +1,25 @@
+<%- include('../layouts/header.ejs') -%>
+
+
+
+<div class="d-flex justify-content-center align-items-center container">
+    <div class="card py-5 px-3">
+        <h5 class="m-0">Mobile phone verification</h5><span class="mobile-text">Enter your OTP send to  <b class="text-danger"></b></span>
+       <form action="/FPverifyOTP" method="post" >
+        <input type="number"  name="otp" required>
+       <!-- <input type="hidden" name="milliseconds" value="message"> -->
+        <input type="submit" class="mt-5 ml-5">
+        <div class="text-center mt-5">
+            <span class="d-block mobile-text">Don't receive the code?</span>
+           
+        <p id="resend"></p>
+       </form>
+       <% if(typeof message !== 'undefined'){ %>
+        <p><%= message %></p>
+        
+        <%
+    } %>
+    </div>
+</div>
+
+<%- include('../layouts/header.ejs') -%>

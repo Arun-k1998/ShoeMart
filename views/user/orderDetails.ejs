@@ -1,0 +1,47 @@
+<%- include("../layouts/userLayouts/header.ejs") -%>
+<style>
+    .order-details{
+        border-radius: 1rem;
+        background-color: aliceblue;
+    }
+</style>
+
+
+
+<div class="contaniner-fluid">
+    <div class="col-lg-12  order-details">
+        <table class="table table-bordered text-left mb-0 " id="cart-table">
+            <thead class="bg-secondary text-dark">
+                <tr>
+                    
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    
+                   
+                </tr>
+            </thead>
+            <tbody class="">  
+                <% for(let product of orderDetails.product){ %>
+                       
+                    <tr>
+                        <td><%= product.productId.name %></td>
+                        <td><%= product.productId.price %></td>
+                        <td><%= product.quantity %></td>
+                        <td><%= orderDetails.totalPrice %></td>
+                    </tr>
+                <%
+            
+            
+            } %> 
+              
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<%- include("../layouts/userLayouts/footer.ejs") -%>

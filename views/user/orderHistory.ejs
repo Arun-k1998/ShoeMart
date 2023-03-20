@@ -1,0 +1,122 @@
+<%- include("../layouts/userLayouts/header.ejs") -%>
+
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-12 table-responsive mb-5">
+         <% if(orderData.length > 0){ %>
+            <table class="table table-bordered text-center mb-0 " id="cart-table">
+                <thead class="bg-secondary text-dark">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Total Amount</th>
+                        <th>Payment</th>
+                        <th>Order Status</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">  
+                   
+                        <% for(let i= 0;i< orderData.length;i++){ %>
+                            <tr >
+                                <td class="align-left"><%= orderData[i]._id %></td>
+                                <td class="align-middle"><%= orderData[i].totalPrice %></td>
+                                <td class="align-middle">
+                                    <%= orderData[i].paymentMethod %>
+                                </td>
+                                <td id="orderStatus<%= orderData[i]._id %>"><%= orderData[i].orderStatus %></td>
+                                
+                                <td class="align-middle"><%= formatedOrderDate[i] %> </td>
+                                
+                                <td><a href="/order-Details?oid=<%= orderData[i]._id %>" class="text-decoration-none text-dark"><span class="material-symbols-outlined">
+                                    visibility
+                                    </span></a></td>
+                                   <%  if(orderData[i].orderStatus == 'Delivered') { %>
+                                        <td id="return"><button class="btn btn-danger" 
+                                            onclick="if(confirm('Do you want to return the item')){returnOrder('<%= orderData[i]._id%>')}">
+                                            Return</button></td>
+                                        <%
+                                        }
+                                        else if(orderData[i].orderStatus == 'Cancelled'){ %>
+                                            <td>Cancelled</td>
+                                            <%
+                                        }else if(orderData[i].orderStatus == 'Returned'){ %>
+                                            <td>Returned</td>
+                                            <%
+                                        } 
+                                    else{ %>
+                                        <td id="<%= orderData[i]._id %>">
+                                            <button class="btn btn-dark" onclick="if(confirm('Do you want to cancel the order')){cancelOrder('<%= orderData[i]._id%>')}">
+                                                Cancel</button>
+                                        </td>
+                                        <%
+                                    } %>
+                                    
+                                </tr>
+                        
+                    
+                        <%
+                    
+                    }
+                    }else{ %> 
+                       <h3>No order Yet?</h3>
+                        <%
+                    } %>
+                   
+                   
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    function cancelOrder(oId){
+        $.ajax({
+            url: '/cancel-order',
+            data:{
+                oId : oId
+            },
+            method: 'put',
+            success: (response)=>{
+                if(response.success){
+                    console.log(response.orderStatus)
+                    document.getElementById(oId).innerHTML = response.orderStatus
+                    document.getElementById('orderStatus'+oId).innerHTML = response.orderStatus
+                }
+            }
+        })
+    }
+
+    function returnOrder(oId){
+        $.ajax({
+            url:'/return-order',
+            data:{
+                oId:oId
+            },
+            method:'put',
+            success:(response)=>{
+                if(response.success){
+                    document.querySelector("#return").innerHTML = response.orderStatus
+                    document.getElementById('orderStatus'+oId).innerHTML = response.orderStatus
+                }
+            }
+        })
+    }
+    // function dateFormate(dateString,oId){
+      
+    //     const options = {
+    //         year:'numeric',
+    //         month:'long',
+    //         day: 'numeric'
+    //     }
+    //     const date = new Date(dateString)
+    //     document.getElementById(oId).innerHTML = "11"
+     
+    // }
+    // dateFormate(order.createdDate ,order._id )
+</script>
+
+<%- include("../layouts/userLayouts/footer.ejs") -%>

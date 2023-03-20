@@ -1,0 +1,96 @@
+<%- include("../layouts/userLayouts/header.ejs") -%>
+
+<div class="col-lg-12 table-responsive mb-5">
+    <% if(userData.wishList.length > 0){ %>
+       <table class="table table-bordered text-center mb-0 wishList-table">
+           <thead class="bg-secondary text-dark">
+               <tr>
+                   <th>Products</th>
+                   <th>Name</th>
+                   <th>Price</th>
+                   <th>Add to Cart</th>
+                   <th>Remove</th>
+               </tr>
+           </thead>
+           <tbody class="align-middle">  
+            <% for(let product of userData.wishList){ %>
+                <tr id="<%= product.productId.name %>">
+                    <td class="align-left"><img src="/images/adminImages/<%= product.productId.image[0] %>" alt="" style="width: 50px;"></td>
+                    <td class="align-middle"><%= product.productId.name %></td>
+                    <td class="align-middle">
+                        <%= product.productId.price %>
+                    </td>
+                    <td class="align-middle" id="<%= product.productId._id %>" >
+                        <button class="btn btn-dark" onclick="addToCart('<%= product.productId._id %>','<%= product.productId.name %>',1)">
+                            <span class="material-symbols-outlined">
+                            add_shopping_cart
+                            </span>
+                        </button>
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-sm btn-primary" onclick="deleteWishListItem('<%= product.productId._id %>','<%= product.productId.name %>')">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </td>
+                    </tr>
+                    <%
+                }
+          
+           }
+           else{ %>
+                <h3>No item in WishList</h3>
+           <% }
+            %>
+         </tbody>
+       </table>
+   </div>
+<script>
+
+    function deleteWishListItem(pId,pName){
+        $.ajax({
+            url: '/deleteWishListItem',
+            data:{
+                pid:pId
+            },
+            method: 'get',
+            success:(response)=>{
+                if(response.success){
+                    if(response.data.wishList.length > 0){
+                        document.getElementById(pName).innerHTML = ''
+                        document.querySelector('.wish-list-length').innerHTML = response.data.wishList.length
+                    }else{
+                        document.querySelector('.wishList-table').innerHTML = 'No item in Wish List'
+                        document.querySelector('.wish-list-length').innerHTML = response.data.wishList.length
+                    }
+                   
+                }
+               
+            }
+        })
+    }
+    function addToCart(proId,proName,count){ 
+            $.ajax({
+                url: '/home/wishList_to_addToCart',
+                data:{
+                    pid:proId,
+                    count:count
+                },
+                method: 'post',
+                success:(response)=>{
+                    if(response.success){
+                        
+                        document.getElementById(proName).innerHTML = ''
+                        document.querySelector('.wish-list-length').innerHTML = response.userData.wishList.length
+                        document.querySelector('.cartlength').innerHTML = response.userData.cart.items.length
+                        
+                    }else{
+                       
+                            
+                        alert('error')
+                    }
+                }
+            })
+        }
+</script>
+
+<%- include("../layouts/userLayouts/footer.ejs") -%>

@@ -1,0 +1,167 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    
+    <title>Shoe Mart</title>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+      <a href="#" class="brand">
+        <i class="bx bxs-smile"></i>
+        <span class="text">AdminHub</span>
+      </a>
+      <ul class="side-menu top">
+        <li >
+          <a href="/admin/home">
+            <i class="bx bxs-dashboard"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/user">
+            <!-- <i class="bx bxs-shopping-bag-alt"></i> -->
+            <span class="material-symbols-outlined"> group </span>
+            <span class="text">Users</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/categories">
+            <i class="bx bxs-doughnut-chart"></i>
+            <span class="text">Categories</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/products">
+            <i class="bx bxs-message-dots"></i>
+            <span class="text">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/orders">
+            <i class="bx bxs-group"></i>
+            <span class="text">Order</span>
+          </a>
+        </li>
+        <li class="active" >
+          <a href="/admin/banners">
+            <i class="bx bxs-group"></i>
+            <span class="text">Banners</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/CouponManagement" >
+            <i class="bx bxs-log-out-circle"></i>
+            <span class="text">Coupon</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        
+        <li>
+          <a href="/admin/logout" class="logout">
+            <i class="bx bxs-log-out-circle"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+      <!-- NAVBAR -->
+      <nav>
+        <i class="bx bx-menu"></i>
+        <a href="#" class="nav-link">Categories</a>
+        <form >
+          <div class="form-input"> 
+            <input type="search" placeholder="Search..."  name="search" />
+            <button type="submit" class="search-btn">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <input type="checkbox" id="switch-mode" hidden />
+        <label for="switch-mode" class="switch-mode"></label>
+        <a href="#" class="notification">
+          <i class="bx bxs-bell"></i>
+          <span class="num">8</span>
+        </a>
+        <a href="#" class="profile">
+          <img src="img/people.png" />
+        </a>
+      </nav>
+
+
+      <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Banners</h1>
+            <ul class="breadcrumb">
+              <li>
+                <a href="#">Banners</a>
+              </li>
+            </ul>
+          </div>
+          <a href="/admin/banner/add_banner" class="btn-download">
+            <span class="text">Banner</span>
+            <span class="material-symbols-outlined">
+              add
+              </span>
+          </a>
+        </div>
+
+       
+   
+
+    <section>
+        <div class="row ">
+            <% if(banner.length > 0){
+               for(i = 0;i < banner.length;i++){ %>
+                <div class="card col-md-4" style="width: 18rem;">
+                    <img src="/images/adminImages/<%= banner[i].image[0] %>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= banner[i].title %></h5>
+                      <p class="card-text"><%= banner[i].description %></p>
+                      <a href="/admin/banners/update_banner?id=<%= banner[i]._id %>" class="btn btn-primary">Update</a>
+                      <a href="/admin/banners/delete_banner?id=<%= banner[i]._id %>" class="btn btn-primary">Delete</a>
+                    </div>
+                  </div>
+                <% }
+               
+             }else{ %>
+                <p>banner not found</p>
+            <% } %>
+            
+        </div>
+    </section>
+  </body>
+</html>
+
+      
+
+      </main>
+      </section>
+
+      
+
+      
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+      <script src="/javascript/admin.js"></script>
+    </body>
+    </html>
+    

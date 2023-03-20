@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>NIKE ShoeMart</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/user.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
+    
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">FAQs</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Help</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Support</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><svg aria-hidden="true" class="pre-logo-svg" focusable="false" viewBox="0 0 24 24" role="img" width="60px" height="60px" fill="none"><path fill="currentColor" fill-rule="evenodd" d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z" clip-rule="evenodd"></path></svg>Shoe Mart</h1>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 text-left">
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search for products">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-6 text-right">
+                <a href="" class="btn border">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge">0</span>
+                </a>
+                <a href="/home/cart?" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <% if(typeof userData !== 'undefined'){ %>
+                        <%if(Array.isArray(userData)){ %>
+                            <span class="badge"><%= userData[0].cart.items.length %></span>
+                        <%}else{ %>
+                            <span class="badge"><%= userData.cart.items.length %></span>
+                        <%}
+                        
+                     }else{
+                        %>
+                        <span class="badge">0</span>
+                        <%
+                    } %>
+                    
+                </a>
+            </div>
+        </div>
+    </div>
+
+ <button class="address-show-btn btn btn-primary ml-5 rounded-pill">Select the Shipping Address</button>
+       
+ <div class="container-fluid row prodcut-listing-after p-4">
+            <% for(let address of userData.shippingAddress){ %>
+                
+                 
+                    <div class="card ml-1 address-div col-md-3 "  style="width: 18rem; display: none;"  > 
+                        <div class="card-body">
+                          <input type="radio" name="address" value="<%= address._id %>" class="address_id">  
+                          <h5 class="card-title " id="name" >Name: <span class="a-<%= address._id %>"><%=address.name%></span> </h5>
+                          <h6 class="card-subtitle mb-2 text-muted " id="phoneNumber">Phone Number : <span class="a-<%= address._id %>"><%= address.phoneNumber%></span> </h6>
+                          <p class="card-text a-<%= address._id %>" id="pinCode" ><%=address.pinCode%></p>
+                          <p class="card-text a-<%= address._id %>" id="locality"><%=address.locality%></p>
+                          <p class="card-text a-<%= address._id %>" id="address"><%= address.address%></p> 
+                          <p class="card-text ">District :<span class="a-<%= address._id %>"><%= address.district%></span></p> 
+                          <p class="card-text ">State : <span class="a-<%= address._id %>" ><%= address.state%></span></p>
+                          <a href="/editAddress?aId=<%= address._id %> " class="card-link">Edit</button></a>
+                          <a href="/checkoutDeleteAddress?aId=<%= address._id %>" class="card-link">Remove</a>
+                        </div>
+                    </div>
+                
+                
+          
+                  <%
+            } %>
+        </div>
+
+  <!--order Start -->
+  <div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            <p class="ml-5 text-success" >Add new address here</p>
+            <form action="" class="add-address-form p-3" id="checkOutForm" >
+                <input type="hidden" name="addressId" value="" id="addressId">
+                <label for="address"  class="form-label">Name:</label>
+                <input type="text" class="form-control name" name="name" required>
+                <br>
+                <label for="phoneNumber" class="form-label">Phone Number :</label>
+                <input type="text" class="form-control phoneNumber"value='' name="phoneNumber" required>
+                <br>
+                <label for="" class="form-label">pincode</label>
+                <input type="number" class="form-control pinCode" name="pinCode" required>
+                <br>
+                <label for="" class="form-label">Locality : </label>
+                <input type="text" class="form-control locality" name="locality" required>
+                <br>
+                <label for="" class="form-label">address: </label>
+                <input type="text" class="form-control address" name="address" required>
+                <br>
+                <label for="district" class="form-label">District : </label>
+                <input type="text" class="form-control district" name="district" required>
+                <br>
+                <label for="state" class="form-label">State :</label>
+                <input type="text" class="form-control state" name="state" required>
+                <br>
+            
+        </div>
+        
+        <div class="col-lg-4 mb-5">
+            <div class="mb-4">
+
+            <!-- coupon form start -->
+
+           
+                
+          
+
+            <!-- coupon form end -->
+
+        </div>
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-bottom-0">
+                    <h4 class="font-weight-semi-bold m-0">Order Summary</h4>
+                </div>
+                <div class="card-body">
+                    <% for(let item of userData.cart.items){ %>
+                        <div class="d-flex justify-content-between mb-2 pt-1">
+                            <h6 class="font-weight-medium"><%=item.productId.name %></h6>
+                            <h6><%= item.quantity %></h6>
+                            <h6 class="font-weight-medium" id="sub-total"><%=item.productId.price*item.quantity %></h6>
+                        </div>
+                        <%
+                    } %>
+                    
+                    
+                    
+                </div>
+                <div class="card-body">
+                    
+                    <div class="d-flex justify-content-between mb-1 pt-1">
+                        <h6 class="font-weight-medium">Subtotal</h6>
+                        <h6 class="font-weight-medium" id="sub-total"><%= userData.cart.totalPrice %></h6>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1 pt-1">
+                        <input type="hidden" id="couponInput" value="">
+                        <h6 class="font-weight-medium">Discount</h6>
+                        <h6 class="font-weight-medium discount" id="sub-total">0</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium ">Shipping</h6>
+                        <h6 class="font-weight-medium">Free</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold" id="checkout-price"><%= userData.cart.totalPrice %></h5>
+                    </div>
+                    <div>
+                        <input type="radio" name="payment" value="COD" required>
+                        <label for="cod"> COD</label>
+                        <br>
+                        <input type="radio" name="payment" value="Online" required>
+                        <label for="razorpay">Online Payment</label>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary my-3 py-3">Proceed To Payment</button>
+            </form>
+                </div>
+                
+            </div>
+           
+            <div class="input-group ">
+                <input type="text" class="form-control p-4 couponCode" name="coupon" placeholder="Coupon Code">
+                <div class="input-group-append">
+                <button class="btn btn-primary" onclick="applyCoupon()">Apply Coupon</button>
+                </div>
+            </div>
+            <div>
+                <h6 class="couponExpired"></h6>
+            </div>
+       
+        </div>
+    </div>
+</div>
+<!-- order End -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+
+
+function razorPay(order){
+   
+    var options = {
+    "key": "rzp_test_YFnQtP3kqbXrKA",    // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "NIKE Shoe Mart",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+       
+        verifyPayment(response,order)
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9000090000"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+}
+var rzp1 = new Razorpay(options);
+rzp1.open();
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+
+}
+
+function verifyPayment(payment,order){
+   
+    $.ajax({
+        url: '/verify-payment',
+        data:{
+            payment,
+            order
+        },
+        method:'post',
+        success:(response)=>{
+            if(response.success){
+                location.href = '/order-success'
+            }else{
+                alert('payment failed')
+            }
+        }
+    })
+}
+
+$("#checkOutForm").submit((e)=> {   
+    e.preventDefault() 
+    $.ajax({
+        url: '/procced-to-payment',
+        method:'post',
+        data: $('#checkOutForm').serialize(),
+        success: (response)=>{
+            if(response.success && response.cod){
+                location.href ='/order-success'
+            }else {
+               
+                razorPay(response.order)
+                // location.href ='/order-success'
+
+            }
+        }
+    })
+})
+
+
+// $("#couponForm").submit((e)=>{
+//     e.preventDefault()
+//     $.ajax({
+//         url:'/applyCoupon',
+//         method:'post',
+//         data:$('#couponForm').serialize(),
+//         success:(response)=>{
+//             if(response.success){
+//                 alert('hello')
+//             }
+//         }
+//     })
+// })
+
+function applyCoupon(){
+    const couponCode = document.querySelector(".couponCode").value
+   
+    $.ajax({
+        url:'/applyCoupon',
+        method:'get',
+        data:{
+            coupon:couponCode
+        },
+        success:(response)=>{
+            if(response.success){
+                if(response.maximumLimit){
+                    document.getElementById('checkout-price').innerHTML = response.totalPrice-(response.maximumAmount*(response.discount/100))
+                    document.querySelector('.discount').innerHTML = '-'+response.maximumAmount*(response.discount/100)
+                    document.getElementById('couponInput').value =response.couponCode
+                    document.querySelector('.couponExpired').innerHTML = response.message 
+                }else{
+                    document.getElementById('checkout-price').innerHTML = response.totalPrice-(response.totalPrice*(response.discount/100))
+                    document.querySelector('.discount').innerHTML = '-'+response.totalPrice*(response.discount/100)
+                    document.getElementById('couponInput').value =response.couponCode
+                    document.querySelector('.couponExpired').innerHTML = ""
+                }
+            }else{
+              
+                document.querySelector('.couponExpired').innerHTML = response.message 
+            }
+        }
+    })
+}
+
+//event listener when window load.work after load end
+
+</script>
+
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="/javascript/easing.min.js"></script>
+<script src="/javascript/owl.carouser.min.js"></script>
+<script>
+    const addressShow = document.querySelector('.address-show-btn')
+    addressShow.addEventListener('click',()=>{
+        document.querySelectorAll('.address-div').forEach((event)=>{
+            event.style.display = 'block';
+        }) 
+    })
+//require already exit data in radio button 
+
+
+//form filling
+
+const addressRadio = document.querySelectorAll('.address_id')
+const nameInput = document.querySelector('.name')
+const phoneNumberInput = document.querySelector('.phoneNumber')
+const pinCodeInput = document.querySelector('.pinCode')
+const localityInput = document.querySelector('.locality')
+const addressInput = document.querySelector('.address')
+const discrictInput = document.querySelector('.district')
+const stateInput = document.querySelector(".state")
+const idInput = document.getElementById('addressId')
+addressRadio.forEach((address)=>{
+    address.addEventListener('change',(event)=>{
+    const addressId = event.target.value
+    
+    const elements = document.querySelectorAll('.a-'+ addressId)  
+    console.log(elements.length);
+    elements.forEach((element,index)=>{
+        if(index === 0){
+            idInput.value = addressId
+            nameInput.value = element.textContent
+        }else if(index === 1){
+            phoneNumberInput.value = element.textContent
+        }else if (index ===2){
+            pinCodeInput.value = element.textContent
+        }else if(index === 3){
+            localityInput.value = element.textContent
+        }else if(index ===4){
+            addressInput.value = element.textContent
+        }else if(index === 5){
+            discrictInput.value = element.textContent
+        }else{
+            stateInput.value = element.textContent
+        }
+    })
+    
+    // const selectedAddress = userData.shippingAddress.find((address)=> address._id === addressId)
+    //     alert('selectedAddress')
+    // nameInput.value = selectedAddress.name
+    // phoneNumberInput.value = selectedAddress.phoneNumber
+    // pinCodeInput.value = selectedAddress.pinCode
+    // localityInput.value = selectedAddress.locality
+    // addressInput.value = selectedAddress.address
+    // discrictInput.value = selectedAddress.discrict
+    // stateInput.value = selectedAddress.state
+})
+})
+
+
+</script>
+

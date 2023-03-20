@@ -1,0 +1,96 @@
+<%- include('../layouts/header.ejs') -%>
+<style type="text/css">
+  body {
+    padding-top: 10%;
+    background: powderblue;
+  }
+
+  .form-login {
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  svg{
+    margin-left: 50%;
+  }
+</style>
+
+<section>
+  <div class="container-fluid">
+    <!-- <div class="d-flex flex-column justify-content-center from-login"> -->
+    <h1 class="text-center">Login</h1>
+
+    <form action="/login" method="post" class="form-login">
+      <div class="form-group">
+        <svg
+          aria-hidden="true"
+          class="pre-logo-svg"
+          focusable="false"
+          viewBox="0 0 24 24"
+          role="img"
+          width="50px"
+          height="54px"
+          fill="none"
+          
+        >
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M21 8.719L7.836 14.303C6.74 14.768 5.818 15 5.075 15c-.836 0-1.445-.295-1.819-.884-.485-.76-.273-1.982.559-3.272.494-.754 1.122-1.446 1.734-2.108-.144.234-1.415 2.349-.025 3.345.275.2.666.298 1.147.298.386 0 .829-.063 1.316-.19L21 8.719z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="email@gmail.com"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          class="form-control"
+          required
+        />
+      </div>
+      <br />
+      <input type="submit" class="btn btn-dark col-md-12" value="submit" />
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-8">
+            <br />
+            <span class="text-center">don't have account? <a href="/registeration" class="text-decoration-none">Join Us</a></span
+            >
+          </div>
+          <div class="col-md-4">
+            <br />
+            <a href="/forgetPassword" class="text-decoration-none text-center" style="color: red">Forget Password</a>
+          </div>
+        </div>
+      </div>
+
+      <% if(typeof message !== 'undefined'){ %>
+      <p style="color: rgb(238, 3, 50);"><%= message %></p>
+      <% } %>
+    </form>
+
+    <!-- </div> -->
+  </div>
+</section>
+
+<%- include('../layouts/header.ejs') -%>
+
+<!-- 
+<%- include('../layouts/header.ejs') -%>
+
+
+
+<%- include('../layouts/header.ejs') -%> -->
