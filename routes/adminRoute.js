@@ -3,10 +3,6 @@ const admin_Route = express();
 const session = require('express-session');
 var mime = require('mime-types')
 
-admin_Route.use(function (req, res, next) {
-    res.set("cache-control", "no-store");
-    next();
-  });
 
 admin_Route.use(session({
     secret: 'hello '

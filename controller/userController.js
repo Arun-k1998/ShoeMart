@@ -391,7 +391,7 @@ const loadProducts = async (req, res) => {
       let isRender = req.query.isRender || true
       
       //limit setting
-      const limit  = 2
+      const limit  = 4
 
       let userData = null
             

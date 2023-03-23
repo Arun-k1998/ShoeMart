@@ -146,10 +146,10 @@
                 <% } %>
                  
                 <br><br>
-                <input type="file" placeholder="select Banner" name="image" value="<%= banner.image[0] %>" onchange="imageChange()" class="form-control" multiple  >
+                <input type="file" placeholder="select Banner" name="image" value="<%= banner.image[0] %>" accept="image/*" onchange="imageChange()" class="form-control" multiple  >
                 <br>
                 <label for="price" class="form-label">URL</label>
-                <input type="text" placeholder="URL" name="url" value="<%= banner.url %>" class="form-control" required >
+                <input type="text" placeholder="URL" name="url" value="<%= banner.url %>" class="form-control">
                 <br>
                 <label for="price" class="form-label">Description</label>
                 <input type="text" placeholder="description" name="description" value="<%= banner.description %>" class="form-control" required >

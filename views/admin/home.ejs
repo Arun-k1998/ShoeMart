@@ -356,7 +356,7 @@ function drawChart() {
   ['Football', 'Hours per Day'],
   ['Gym', categoryWise[0]],
   ['Running',categoryWise[1]],
-  ['Cricket', categoryWise[2]],
+  ['Football', categoryWise[2]],
   
 ]);
 
@@ -374,7 +374,7 @@ function drawChart() {
 <script>
   const weeklyWise = document.getElementById("barChartValues").value.split(',').map(Number)
   var xValues = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday","Saturday"];
-  var yValues = [weeklyWise[0], 0, weeklyWise[1], 0, 0,0,weeklyWise[2]];
+  var yValues = [weeklyWise[0], 0, 0, 0, 0,0, weeklyWise[1]];
   var barColors = ["orange", "orange","orange","orange","orange","orange","orange"];
   
   new Chart("barChart", {

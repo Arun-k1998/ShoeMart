@@ -1,10 +1,7 @@
 const express = require('express');
 const user_Route = express();
 const session = require('express-session')
-user_Route.use(function (req, res, next) {
-    res.set("cache-control", "no-store");
-    next();
-  });
+
 user_Route.use(session({
     secret: 'hello '
 }));

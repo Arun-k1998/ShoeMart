@@ -100,7 +100,7 @@ const homePage = async(req,res)=>{
                 }
                
             ])
-           
+           console.log(categoryWise);
             const paymentMethod =await order.aggregate([
                 {
                     $match:{orderStatus:"Placed"}
@@ -155,13 +155,13 @@ const homePage = async(req,res)=>{
             }
 
             ])  
-            console.log(new Date());
-            console.log(new Date(new Date().getTime() - (7*24*60*60*1000)));
+            // console.log(new Date());
+            // console.log(new Date(new Date().getTime() - (7*24*60*60*1000)));
             console.log(weeklySales);
             const circular = categoryWise.map((category)=> category.totalSale)
             const donutChart = paymentMethod.map((payment)=> payment.percentage)
             const barChart = weeklySales.map((payment)=> payment.totalAmount) 
-             res.render('home',{admin: userData,orderDetails,totalUser,orderData,circular,donutChart,barChart})
+            res.render('home',{admin: userData,orderDetails,totalUser,orderData,circular,donutChart,barChart})
        
         
     } catch (error) {

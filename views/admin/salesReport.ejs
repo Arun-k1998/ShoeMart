@@ -162,21 +162,7 @@
         </div>
 
 
-        <div class="divContent mb-4">
-            <div class="container-fluid">
-              <div class="col-lg-8 my-auto ">
-                <!-- placed order total sale price only -->
-                <div class="mb-4"><h6>Category wise</h6></div>
-                <% for(let category of totalSale.categorySales){ %>
-                  <div class="d-flex col-lg-6 justify-content-around align-content-start">
-                    <div class="col-lg-2"><h6><%= category.category %> </h6></div>
-                    <div class="col-lg-2"><span>:</span></div>
-                    <div class="col-lg-2"><span><%= (category.percentage) %>%</span></div>
-                  </div>
-                <% } %>
-              </div>
-            </div>
-        </div>
+       
 
         <div class="table-data">
           <div class="order">
