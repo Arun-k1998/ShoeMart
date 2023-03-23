@@ -328,7 +328,7 @@ const loadProduct = async(req,res)=>{
             //  console.log(products)
             
 
-            res.render('productManagement',{product:products})
+            res.render('ProductManagement',{product:products})
        
     } catch (error) {
         console.log(error.message)
@@ -817,7 +817,7 @@ const loadSalesReport = async(req,res)=>{
         }
        
         const orderData = await order.find({createdDate:{$gte: from,$lte:to}}).sort({createdDate:-1}).populate('user').populate("product.productId","name")
-     
+        console.log(orderData[0].product[0].productId.name);
         res.render('salesReport',{totalSale,orderData,from,to})
     } catch (error) {
         console.log(error.message);
