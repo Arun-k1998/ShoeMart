@@ -180,31 +180,41 @@
                 </tr>
               </thead>
               <tbody>
-                <% for(let i = 0;i < 5;i++){ %>
-                  <tr>
-                    <td>
-                    <p><%= orderData[i].user.firstName %></p>
-                    </td>
-                    <td><%= orderData[i].createdDate.toLocaleDateString() %>.</td>
-                    <% if(orderData[i].orderStatus === 'Placed'){ %>
+                  <% for(let i = 0;i < orderData.length;i++){ 
+                    if(orderData[i].ordered == true){
+                      
+                    if(i == 5){%>
+                      <% break %>
+                      <%
+                    } %>
+                    <tr>
+                      <td>
+                      <p><%= orderData[i].user.firstName %></p>
+                      </td>
+                      <td><%= orderData[i].createdDate.toLocaleDateString() %>.</td>
+                      <% if(orderData[i].orderStatus === 'Placed'){ %>
 
-                      <td><span class="status completed">Placed</span></td>
+                        <td><span class="status completed">Placed</span></td>
 
-                    <% }else if(orderData[i].orderStatus === 'Delivered') { %>
+                      <% }else if(orderData[i].orderStatus === 'Delivered') { %>
 
-                      <td><span class="status Delivered">Delivered</span></td>
+                        <td><span class="status Delivered">Delivered</span></td>
 
-                    <%  }else if(orderData[i].orderStatus === 'Cancelled') { %>
+                      <%  }else if(orderData[i].orderStatus === 'Cancelled') { %>
 
-                      <td><span class="status Cancelled">Cancelled</span></td>
+                        <td><span class="status Cancelled">Cancelled</span></td>
 
-                    <%  }else if(orderData[i].orderStatus === 'Returned') { %>
+                      <%  }else if(orderData[i].orderStatus === 'Returned') { %>
 
-                      <td><span class="status Returned">Returned</span></td>
+                        <td><span class="status Returned">Returned</span></td>
 
-                    <%  } %>
-                  </tr>  
-                <% } %>
+                      <%  } %>
+                    </tr>
+                    
+                    <%}else{ %>
+                      <% continue %>
+                    <% }  
+                   } %>
                 
                  
                   

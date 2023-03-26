@@ -761,7 +761,7 @@ const loadWishList = (req,res)=>{
 }
 
 const addToWishlist = async(req,res)=>{
-    
+        if(req.session.user_id){
         const pid = req.body.pid
         const userData = await users.findById(req.session.user_id)
         const productData = await product.findById(pid)
@@ -778,6 +778,9 @@ const addToWishlist = async(req,res)=>{
         }else{
             res.redirect('/home')
         }
+    }else{
+        res.json({login:true})
+    }
    
 }
 

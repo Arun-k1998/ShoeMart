@@ -169,10 +169,18 @@
             <div class="head">
               <h3>List</h3>
              <!-- <a href="/admin/download-salesReport"> -->
+              <% if(orderData.length > 0 ){ %>
               <button class="download-btn downloadReport" onclick="downloadPdf()">
                 <i class="bx bxs-cloud-download"></i>
                 <span class="text">Download Report</span>
               </button>
+            <% }else{ %>
+              <button class="download-btn downloadReport d-none" onclick="downloadPdf()" >
+                <i class="bx bxs-cloud-download"></i>
+                <span class="text">Download Report</span>
+              </button>
+              <%
+            } %>
             <!-- </a> -->
             </div>
             <table id="example">

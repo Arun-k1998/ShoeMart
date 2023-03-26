@@ -196,6 +196,8 @@ const checkOut = async(req,res)=>{
             discount:req.session.coupon.discount ? req.session.coupon.discount:0
         })
         const orderSuccess = await orderData.save() 
+        console.log(orderSuccess._id);
+        console.log(orderSuccess.ordered);
         req.session.orderId = orderSuccess._id
         // await coupon.findOneAndUpdate({couponCode:req.session.coupon.couponCode},
         //     {$push:{users:req.session.user_id}})
@@ -205,6 +207,8 @@ const checkOut = async(req,res)=>{
         if(payment == 'COD'){
            
             if(orderSuccess){
+                orderSuccess.ordered = true
+                await orderSuccess.save()
                 await coupon.findOneAndUpdate({couponCode:req.session.coupon.couponCode},
                     {$push:{users:req.session.user_id}})
         
@@ -263,7 +267,8 @@ const verifyPayment = async(req,res)=>{
        
         if(hmac == req.body.payment.razorpay_signature){
             const update = {$set:{
-                paymentStatus: 'Charged'
+                paymentStatus: 'Charged',
+                ordered:true
             }}
             const options = {new: true}
             await order.findByIdAndUpdate(orderId,update,options).then(()=>{

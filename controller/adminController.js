@@ -7,13 +7,23 @@ const orderitem = require('../model/orderItemModel')
 const order = require('../model/orderModel')
 const {findOne, findByIdAndUpdate, findByIdAndDelete}= require('../model/categoriesModel')
 const coupon = require('../model/couponModel')
+const cloudinary = require('cloudinary').v2
 
+
+// cloudinary Configuration 
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRECT
+});
 
 // html to pdf require
 const ejs = require('ejs')
 const pdf = require("html-pdf")
 const fs = require('fs')
-const path = require('path')
+const path = require('path');
+// const { resolve } = require('path');
 
 
 const loadLogin = async(req,res)=>{
@@ -58,10 +68,13 @@ const homePage = async(req,res)=>{
              const totalUser = await User.find({is_admin:0,isBlocked:false}).countDocuments()
              const orderData = await order.find({}).sort({createdDate:-1}).populate('user','firstName')
              const totalOrder =await order.find({orderStatus:"Placed"}).countDocuments()
-            
+             console.log("orderDataaaa");
+             console.log(orderData);
              const pipeLine = [
                 {
-                    $match:{orderStatus:'Placed'}
+                    $match:{orderStatus:'Placed',
+                    ordered:true
+                }
                 },
                 {
                     $group:{
@@ -76,7 +89,8 @@ const homePage = async(req,res)=>{
             // category wise sales
             const categoryWise = await order.aggregate([
                 {
-                     $match:{orderStatus:"Placed"}
+                     $match:{orderStatus:"Placed",
+                     ordered:true}
                 },
                 {
                     $unwind:"$product"
@@ -100,10 +114,12 @@ const homePage = async(req,res)=>{
                 }
                
             ])
-           console.log(categoryWise);
+        //    console.log(categoryWise);
             const paymentMethod =await order.aggregate([
                 {
-                    $match:{orderStatus:"Placed"}
+                    $match:{orderStatus:"Placed",
+                    ordered:true
+                            }
                 },
                 {
                     $group:{
@@ -134,7 +150,8 @@ const homePage = async(req,res)=>{
                     createdDate:{
                         $gte: new Date(new Date().getTime() - (7*24*60*60*1000))
                     },
-                    orderStatus:"Placed"
+                    orderStatus:"Placed",
+                    ordered:true
                 }
                 
             },
@@ -157,7 +174,7 @@ const homePage = async(req,res)=>{
             ])  
             // console.log(new Date());
             // console.log(new Date(new Date().getTime() - (7*24*60*60*1000)));
-            console.log(weeklySales);
+            // console.log(weeklySales);
             const circular = categoryWise.map((category)=> category.totalSale)
             const donutChart = paymentMethod.map((payment)=> payment.percentage)
             const barChart = weeklySales.map((payment)=> payment.totalAmount) 
@@ -349,18 +366,53 @@ const loadAddProduct = async(req,res)=>{
     }
 }
 
+const uploads = async(file,folder)=>{
+   
+        const result = await cloudinary.uploader.upload(file,{
+            resource_type:"auto",
+            folder:"Images"
+        })
+        console.log(result);
+       return result.secure_url
+    
+}
 const addProduct = async(req,res)=>{
     try {
         const sizes = req.body.size;
         console.log(sizes) 
         console.log(req.body.category)
-        console.log(req.files)
-        const images = req.files.map((file)=> file.filename)
+        
+     
+        const uploader = async(path)=> await uploads(path,"Images")
+        let url = []
+        const files = req.files
+        for(let file of files){
+            const path= file.path
+           
+            const newPath = await uploader(path)
+            console.log(newPath);
+                
+            url.push(newPath)
+            fs.unlinkSync(path)
+        }
+
+        // const images = req.files.map((file)=> file.filename)
+        // const images = req.files.map(async(file)=> {
+           
+        //     const path= file.path
+           
+        //     const newPath = await uploader(path)
+        //     console.log(newPath);
+                
+        //     url.push(newPath)
+        //     fs.unlink(path)
+        // })
+        console.log("url"+url);
         const productData = new product({
             name :req.body.name,
             description:req.body.description,
             price:req.body.price,
-            image:images,
+            image:url,
             category:req.body.category,
             sizes: sizes,
             quantity: req.body.quantity,
@@ -396,11 +448,22 @@ const updateProduct = async(req,res)=>{
       
          const allowedSizes = await product.schema.path('sizes').enumValues
         //  const category = await categorie.find({})
-         const image = req.files.map((file)=> file.filename)
-
+        //  const image = req.files.map((file)=> file.filename)
+        const uploader = async(path)=> await uploads(path,"Images")
+        let url = []
+        const files = req.files
+        for(let file of files){
+            const path= file.path
+           
+            const newPath = await uploader(path)
+            console.log(newPath);
+                
+            url.push(newPath)
+            fs.unlinkSync(path)
+        }
         
-        for(let i= 0;i < image.length;i++){
-            const singleImage = image[i]
+        for(let i= 0;i < url.length;i++){
+            const singleImage = url[i]
             await product.findByIdAndUpdate({_id:req.body.id},{$push:{image:singleImage}})
         }
         
@@ -428,15 +491,15 @@ const deleteImage = async(req,res)=>{
     try {
         const image = req.query.id
         const pId = req.query.pId
-        const imagePath = path.join(__dirname,'..','public','images','adminImages',image)
-        fs.unlink(imagePath,(err)=>{
-            if(err){
-                console.log(err.message);
-                throw err
-            }else{
-                console.log(`${image} deleted!`);
-            }
-        })
+        // const imagePath = path.join(__dirname,'..','public','images','adminImages',image)
+        // fs.unlink(imagePath,(err)=>{
+        //     if(err){
+        //         console.log(err.message);
+        //         throw err
+        //     }else{
+        //         console.log(`${image} deleted!`);
+        //     }
+        // })
         await product.findByIdAndUpdate(pId,{$pull:{image:image}},{new:true}).then((data)=>{
             if(data){
               res.redirect(`/admin/products/updateProduct?id=${data._id}`)
@@ -583,13 +646,13 @@ const loadOrderManagement = async(req,res)=>{
     try {
         
            
-             const orders = await order.find().populate('user','firstName').sort({createdDate:-1})
+             const orders = await order.find({}).populate('user','firstName').sort({createdDate:-1})
              const orderStatus = order.schema.path('orderStatus').enumValues
              const time = orders.map((order)=>{
                 const date = new Date(order.createdDate)
                 return date.toLocaleString();
              })
-           
+           console.log(orders);
             res.render('orderManagement',{orders :orders,time,orderStatus})
         
     } catch (error) {
@@ -816,8 +879,8 @@ const loadSalesReport = async(req,res)=>{
             
         }
        
-        const orderData = await order.find({createdDate:{$gte: from,$lte:to}}).sort({createdDate:-1}).populate('user').populate("product.productId","name")
-        console.log(orderData[0].product[0].productId.name);
+        const orderData = await order.find({createdDate:{$gte: from,$lte:to}, ordered:true}).sort({createdDate:-1}).populate('user').populate("product.productId","name")
+       
         res.render('salesReport',{totalSale,orderData,from,to})
     } catch (error) {
         console.log(error.message);
@@ -838,7 +901,7 @@ const salesReportDownload = async(req,res)=>{
             let fromDate = new Date(to.getTime()-(7*24*60*60*1000))
             from = fromDate
         }
-        const orderData = await order.find({createdDate:{$gte:from,$lte:to}}).sort({createdDate:-1}).populate('user').populate("product.productId","name")
+        const orderData = await order.find({createdDate:{$gte:from,$lte:to}, ordered:true}).sort({createdDate:-1}).populate('user').populate("product.productId","name")
         const data= {
             orderData:orderData,
             from,to

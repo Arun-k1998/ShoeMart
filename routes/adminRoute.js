@@ -100,9 +100,9 @@ admin_Route.get('/coupon/updateCoupon',adminController.loadupdateCoupon)
 admin_Route.get('/coupon/deleteCoupon',adminController.deleteCoupon)
 
 // ------------ sales report ----------
-admin_Route.get('/sales-Report',adminController.loadSalesReport)
+admin_Route.get('/sales-Report',adminAuth.logIn,adminController.loadSalesReport)
 admin_Route.post('/download-salesReport',adminController.salesReportDownload)
-admin_Route.get('/date-by-order',adminController.loadSalesReport)
+admin_Route.get('/date-by-order',adminAuth.logIn,adminController.loadSalesReport)
 admin_Route.get('/logout',adminAuth.logIn,adminController.logout)
 
 module.exports = admin_Route;

@@ -100,6 +100,10 @@ const orderSchema = mongoose.Schema({
     },
     discount:{
         type:Number
+    },
+    ordered:{
+        type:Boolean,
+        default:false
     }
 })
 

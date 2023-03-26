@@ -161,7 +161,7 @@
           <div class="form-group col-md-8">
             <div class="d-flex">
               <% for(let i=0;i < product.image.length;i++){ %>
-                <img src="/images/adminImages/<%= product.image[i] %>" alt="" style="width:3rem ;height:auto" class="m-3"><a href="/admin/delete-product-image?id=<%= product.image[i] %>&pId=<%= product._id %>" onclick="return confirm('Do you want to delete the image')">
+                <img src="<%= product.image[i] %>" alt="" style="width:3rem ;height:auto" class="m-3"><a href="/admin/delete-product-image?id=<%= product.image[i] %>&pId=<%= product._id %>" onclick="return confirm('Do you want to delete the image')">
                   <span class="material-symbols-outlined"style='width:1rem'>
                     close
                     </span> 

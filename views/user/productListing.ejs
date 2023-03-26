@@ -222,7 +222,7 @@
                             <div class="card product-item border-0 mb-4 product_container d-flex ">
                                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                         <a href="/home/prodcut/product_details?id=<%= product._id %>">
-                                            <img class="img-fluid w-100" src="/images/adminImages/<%= product.image[1] %>" alt="">
+                                            <img class="img-fluid w-100" src="<%= product.image[1] %>" alt="">
                                         </a>  
                                     </div>
                                     <div class="card-body border-left border-right text-center p-0 pt-2 pb-2">
@@ -378,7 +378,7 @@
                             <div class="card product-item border-0 mb-4 product_container d-flex ">
                                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                         <a href="/home/prodcut/product_details?id=${product._id}">
-                                            <img class="img-fluid w-100" src="/images/adminImages/${product.image[1]}" alt="">
+                                            <img class="img-fluid w-100" src="${product.image[1]}" alt="">
                                         </a>  
                                     </div>
                                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
@@ -580,6 +580,8 @@
                     wishlistBtn.classList.remove("text-primary");
                     wishlistBtn.classList.add("text-danger");
                     
+                }else if(response.login){
+                    console.log('hoellsfa');
                 }
                 
             }

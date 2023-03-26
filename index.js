@@ -19,6 +19,10 @@ app.use(function (req, res, next) {
     next();
   });
   
+
+app.set("view engine","ejs");
+
+
 app.use(morgan('dev'))
 const userRoute = require('./routes/UserRoute');
 app.use('/',userRoute);
@@ -26,6 +30,8 @@ app.use('/',userRoute);
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin',adminRoute)
 
+const error = require('./controller/errorController')
+app.use(error.get404)
 
 app.listen(3000,()=>{
     console.log('server is running........')

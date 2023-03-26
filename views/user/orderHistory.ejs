@@ -18,7 +18,11 @@
                 </thead>
                 <tbody class="align-middle">  
                    
-                        <% for(let i= 0;i< orderData.length;i++){ %>
+                        <% for(let i= 0;i< orderData.length;i++){ 
+                            if(orderData[i].ordered == false){%>
+                                <% continue %>
+                                <%
+                            } %>
                             <tr >
                                 <td class="align-left"><%= orderData[i]._id %></td>
                                 <td class="align-middle"><%= orderData[i].totalPrice %></td>
