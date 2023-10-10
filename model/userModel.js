@@ -1,4 +1,4 @@
-const { Timestamp, ObjectId } = require('mongodb');
+// const { Timestamp, ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 const userDate = mongoose.Schema({
@@ -61,7 +61,7 @@ const userDate = mongoose.Schema({
     wishList:[
         {
             productId :{
-                type:ObjectId,
+                type: mongoose.Schema.Types.ObjectId,
                 ref:'Product',
                 required: true
             } 

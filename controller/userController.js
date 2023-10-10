@@ -6,9 +6,9 @@ const banner = require("../model/bannerModel");
 const order = require("../model/orderModel");
 const { Reject } = require("twilio/lib/twiml/VoiceResponse");
 const { find } = require("../model/userModel");
-const ObjectId = require("mongodb").ObjectID;
 const validator = require("validator");
 const nodeMailer = require("nodemailer");
+// const ObjectId = require("mongodb").ObjectID;
 
 const otpGenerator = () => {
   const otp = Math.floor(Math.random() * 1000000);

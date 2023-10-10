@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
 
@@ -22,7 +22,7 @@ const productSchema = mongoose.Schema({
         required : true
     }],
     category:{
-        type : ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref : 'category',
         required : true
     },
