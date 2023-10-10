@@ -249,7 +249,7 @@ function razorPay(order){
    
     var options = {
     "key": "rzp_test_YFnQtP3kqbXrKA",    // Enter the Key ID generated from the Dashboard
-    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "amount": order.amo, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
     "name": "NIKE Shoe Mart",
     "description": "Test Transaction",
@@ -269,10 +269,12 @@ function razorPay(order){
     },
     "theme": {
         "color": "#3399cc"
-    }
+    },
+    
 }
 var rzp1 = new Razorpay(options);
 rzp1.open();
+
 rzp1.on('payment.failed', function (response){
         alert(response.error.code);
         alert(response.error.description);

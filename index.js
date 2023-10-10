@@ -30,9 +30,11 @@ app.use('/',userRoute);
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin',adminRoute)
 
+
+
 const error = require('./controller/errorController')
 app.use(error.get404)
 
-app.listen(3000,()=>{
+app.listen(4000,()=>{
     console.log('server is running........')
 });

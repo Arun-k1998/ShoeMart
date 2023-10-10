@@ -86,6 +86,7 @@ const homePage = async(req,res)=>{
              ]
              const orderDetails = await order.aggregate(pipeLine)
             
+
             // category wise sales
             const categoryWise = await order.aggregate([
                 {
@@ -388,25 +389,13 @@ const addProduct = async(req,res)=>{
         const files = req.files
         for(let file of files){
             const path= file.path
-           
+         
             const newPath = await uploader(path)
             console.log(newPath);
                 
             url.push(newPath)
             fs.unlinkSync(path)
         }
-
-        // const images = req.files.map((file)=> file.filename)
-        // const images = req.files.map(async(file)=> {
-           
-        //     const path= file.path
-           
-        //     const newPath = await uploader(path)
-        //     console.log(newPath);
-                
-        //     url.push(newPath)
-        //     fs.unlink(path)
-        // })
         console.log("url"+url);
         const productData = new product({
             name :req.body.name,
@@ -650,7 +639,7 @@ const loadOrderManagement = async(req,res)=>{
              const orderStatus = order.schema.path('orderStatus').enumValues
              const time = orders.map((order)=>{
                 const date = new Date(order.createdDate)
-                return date.toLocaleString();
+                return date.createdDate();
              })
            console.log(orders);
             res.render('orderManagement',{orders :orders,time,orderStatus})

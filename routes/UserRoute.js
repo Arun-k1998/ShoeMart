@@ -33,7 +33,7 @@ user_Route.post('/login',userController.verifyLogin);
 
 //registeration
 user_Route.get('/registeration',userAuth.LogOut,userController.LoadRegisteration);
-user_Route.post('/registeration',userController.inserUser);
+user_Route.post('/registeration',userController.insertUser);
 
 
 

@@ -216,7 +216,8 @@ width: 100%;
                                 <div class="media mb-4">
                                     <!-- <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;"> -->
                                     <div class="media-body">
-                                        <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
+                                        <% for(let review of productData.reviews){ %>
+                                        <h6><%= review.userId.firstName %><small><%= review.createdDate.toLocaleString() %><i></i></small></h6>
                                         <!-- <div class="text-primary mb-2">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
@@ -224,7 +225,7 @@ width: 100%;
                                             <i class="fas fa-star-half-alt"></i>
                                             <i class="far fa-star"></i>
                                         </div> -->
-                                       <% for(let review of productData.reviews){ %>
+                                      
                                             <p id="<%= review._id %>"><%= review.userReview %></p>
                                         <% } %>
                                         
@@ -245,7 +246,7 @@ width: 100%;
                                         <i class="far fa-star"></i>
                                     </div> -->
                                 </div>
-                               <% if(productData.reviews.length >=1){ %>
+                               <% if(reviewExit >= 0){ %>
                                 <form id="reviewForm">
                                     <div class="form-group">
                                         <label for="message">Your Review *</label>

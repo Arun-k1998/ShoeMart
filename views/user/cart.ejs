@@ -38,7 +38,7 @@
                     <tbody class="align-middle">  
                         <% for(let product of cart.items){ %>
                         <tr id="<%= product.productId.name %>">
-                            <td class="align-left"><img src="/images/adminImages/<%= product.productId.image[0] %>" alt="" style="width: 50px;"> <%= product.productId.name %></td>
+                            <td class="align-left"><img src="<%= product.productId.image[0] %>" alt="" style="width: 50px;"> <%= product.productId.name %></td>
                             <td class="align-middle"><%= product.productId.price %></td>
                             <td class="align-middle">
                                  <div class="input-group quantity mx-auto" style="width: 100px;">

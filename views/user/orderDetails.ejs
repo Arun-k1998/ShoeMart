@@ -26,10 +26,11 @@
                 <% for(let product of orderDetails.product){ %>
                        
                     <tr>
-                        <td><%= product.productId.name %></td>
+                        <td><img src="<%= product.productId.image[0] %>" style="width: 2rem;height: auto; margin-right: 5px;">
+                            <%= product.productId.name %></td>
                         <td><%= product.productId.price %></td>
                         <td><%= product.quantity %></td>
-                        <td><%= orderDetails.totalPrice %></td>
+                        <td><%= product.productId.price*product.quantity %></td>
                     </tr>
                 <%
             

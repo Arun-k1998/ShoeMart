@@ -443,17 +443,15 @@ const productReview = async(req,res)=>{
        
         const productReview = req.body.productReview
         const pId = req.body.pid
-        const ObjectId = mongoose.Types.ObjectId;
-        console.log(typeof productReview)
-        console.log(typeof pId);
-        console.log(typeof req.session.user_id);
-        await product.findByIdAndUpdate(pId,{$push:{reviews:{userId:req.session.user_id,userReview:productReview}}}).then((data)=>{
-            console.log("success");
+       
+        //27/03/2023
+        await product.findOneAndUpdate({_id:pId},{$push:{reviews:{userId:req.session.user_id,userReview:productReview}}},{ new: true }).then((data)=>{
+            
             if(data){
                 res.redirect('/home')
 
             }
-        }).catch((err)=> console.log(err.message))
+        })
         
 
     } catch (error) {
