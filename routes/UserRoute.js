@@ -3,7 +3,8 @@ const user_Route = express();
 const session = require('express-session')
 
 user_Route.use(session({
-    secret: 'hello '
+    //secret:'hello '
+    secret:process.env.SESSION_SECRET
 }));
 
 user_Route.set("view engine","ejs");

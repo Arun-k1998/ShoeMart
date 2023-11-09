@@ -5,7 +5,7 @@ var mime = require('mime-types')
 
 
 admin_Route.use(session({
-    secret: 'hello '
+    secret:process.env.SESSION_SECRET
 }));
 
 admin_Route.set("view engine","ejs");
